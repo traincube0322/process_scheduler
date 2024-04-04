@@ -1,4 +1,3 @@
-jiwon park
-idiot
-.
+박지원
 
+노트북에 WSL2 깔아올 것.
