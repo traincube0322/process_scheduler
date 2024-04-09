@@ -1,23 +1,23 @@
 public class Process {
     private int pid;
     private int priority;
-    private int arrive_time;
-    private int finish_time;
+    private int arriveTime;
+    private int burstTime;
 
-    public Process(int pid, int priority, int arrive_time, int finish_time) {
+    public Process(int pid, int priority, int arriveTime, int burstTime) {
         this.pid = pid;
         this.priority = priority;
-        this.arrive_time = arrive_time;
-        this.finish_time = finish_time;
+        this.arriveTime = arriveTime;
+        this.burstTime = burstTime;
     }
 
     public int getPid() { return pid; }
     public int getPriority() { return priority; }
-    public int getArrive_time() { return arrive_time; }
-    public int getFinish_time() { return finish_time; }
+    public int getArriveTime() { return arriveTime; }
+    public int getBurstTime() { return burstTime; }
 
     @Override
     public String toString() {
-        return pid + ", " + priority + ", " + arrive_time + ", " + finish_time;
+        return pid + ", " + priority + ", " + arriveTime + ", " + burstTime;
     }
 }
