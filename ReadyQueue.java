@@ -13,9 +13,13 @@ public class ReadyQueue {
 
     public void displayQueue ()
     {
-        System.out.println("Ready Queue");
-        for (Process p : Q)
-            System.out.println(p);
+        if (Q.isEmpty()) { System.out.println("Ready Queue Empty"); }
+        else {
+            System.out.println("Ready Queue");
+            for (Process p : Q)
+                System.out.println(p);
+            System.out.println();
+        }
     }
 
 
