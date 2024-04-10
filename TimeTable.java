@@ -1,3 +1,3 @@
-public class TimeTable {
+public class TimeTable{
 
 }
