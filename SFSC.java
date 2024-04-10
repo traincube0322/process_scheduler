@@ -25,11 +25,13 @@ public class SFSC {
             //pp.displayProcessPoll();
             //rq.displayQueue();
             // running 프로세스가 있고, 프로세스가 시간을 다 썼다면?
+            // runningProcess is null.
             if (runningProcess != null && elapsedTime == runningProcess.getBurstTime()) {
                 System.out.println("pid : " + runningProcess.getPid() + " end at " + time);
                 runningProcess = null;
             }
             // 현재 실행중인 프로세스가 없다면?
+            // RQ 에서 프로세스 하나를 뽑아서 CPU Burst 시킴. : Running Process
             if (runningProcess == null) {
                 if (!rq.isEmpty()) {
                     runningProcess = rq.dequeue();
@@ -37,11 +39,7 @@ public class SFSC {
                     elapsedTime = 0;
                 }
             }
-            // 프로세스 있으면 시간 증가.
             elapsedTime++;
-
-            // RQ 에서 프로세스 하나를 뽑아서 CPU Burst 시킴. : Running Process
-            // 그 프로세스의 elapsed time == brust time 이면 RQ에서 새 프로세스 다시 뽑기.
 
             time++;
             System.out.println();
