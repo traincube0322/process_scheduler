@@ -28,7 +28,7 @@ public class FileSelector {
         try (BufferedReader reader = new BufferedReader(new FileReader(file))) {
             String line;
             while ((line = reader.readLine()) != null) {
-                String[] tokens = line.split(", ");
+                String[] tokens = line.split(" ");
                 if (tokens.length != 4) {
                     throw new IOException("파일 형식 오류: " + file.getName());
                 }
