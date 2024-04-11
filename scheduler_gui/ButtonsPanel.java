@@ -52,8 +52,10 @@ class ButtonsPanel extends JPanel {
 
             // 버튼 눌렀을 때 output패널창 변경
 //            outputPanel.reTable(pp);
-            SFSC sfsc = new SFSC(pp, new ReadyQueue());
-            sfsc.run();
+//            SFSC sfsc = new SFSC(pp, new ReadyQueue());
+//            sfsc.run();
+            FCFS fcfs = new FCFS(pp, new ReadyQueue());
+            fcfs.run();
         }
     }
 }

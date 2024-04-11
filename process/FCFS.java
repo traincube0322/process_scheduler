@@ -1,11 +1,11 @@
 package process;
 
-public class SFSC {
+public class FCFS {
 
     private int time;
     private final ProcessPoll pp;
     private final ReadyQueue rq;
-    public SFSC(ProcessPoll pp, ReadyQueue rq) {
+    public FCFS(ProcessPoll pp, ReadyQueue rq) {
         time = 0;
         this.pp = pp;
         this.rq = rq;
@@ -44,6 +44,6 @@ public class SFSC {
             time++;
             System.out.println();
         }
-        System.out.println("process.SFSC END");
+        System.out.println("process.FCFS END");
     }
 }
