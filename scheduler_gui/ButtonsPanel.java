@@ -54,7 +54,7 @@ class ButtonsPanel extends JPanel {
 //            outputPanel.reTable(pp);
 //            SFSC sfsc = new SFSC(pp, new ReadyQueue());
 //            sfsc.run();
-            FCFS fcfs = new FCFS(pp, new ReadyQueue());
+            FCFS fcfs = new FCFS(pp);
             fcfs.run();
         }
     }

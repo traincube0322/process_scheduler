@@ -5,7 +5,7 @@ public class Main {
         JYScheduler schedulerFrame = new JYScheduler();
 //        ProcessPoll pp = new ProcessPoll();
 //        new FileSelector(pp);
-//        FCFS sfsc = new FCFS(pp, new ReadyQueue());
+//        FCFS sfsc = new FCFS(pp);
 //        sfsc.run();
     }
 }

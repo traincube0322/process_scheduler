@@ -15,7 +15,6 @@ public class Priority {
         Process runningProcess = null;
 
         while (runningProcess != null || !pp.isEmpty() || !ppq.isEmpty()) {
-            System.out.println("time : " + time);
 
             while (!pp.isEmpty() && time == pp.peek().getArriveTime()) {
                 ppq.add(pp.poll());
@@ -35,7 +34,6 @@ public class Priority {
             if (runningProcess != null)
                 runningProcess.cpuBurst();
             time++;
-            System.out.println();
         }
         System.out.println("PRIORITY END");
     }

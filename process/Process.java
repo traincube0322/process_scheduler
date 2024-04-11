@@ -1,9 +1,9 @@
 package process;
 public class Process {
-    private int pid;
-    private int priority;
-    private int arriveTime;
-    private int burstTime;
+    private final int pid;
+    private final int priority;
+    private final int arriveTime;
+    private final int burstTime;
     private int remainTime;
 
     public Process(int pid, int priority, int arriveTime, int burstTime) {
