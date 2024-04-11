@@ -42,8 +42,8 @@ class ButtonsPanel extends JPanel {
             // 버튼 눌렀을 때 input패널창 변경
             inputPanel.reTable(pp);
 
-            SFSC sfsc = new SFSC(pp, new ReadyQueue());
-            sfsc.run();
+            FCFS fcfs = new FCFS(pp, new ReadyQueue());
+            fcfs.run();
 
         }
     }
