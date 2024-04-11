@@ -1,4 +1,4 @@
-import javax.swing.*;
+package process;
 
 public class SFSC {
 
@@ -31,7 +31,7 @@ public class SFSC {
                 runningProcess = null;
             }
             // 현재 실행중인 프로세스가 없다면?
-            // RQ 에서 프로세스 하나를 뽑아서 CPU Burst 시킴. : Running Process
+            // RQ 에서 프로세스 하나를 뽑아서 CPU Burst 시킴. : Running process.Process
             if (runningProcess == null) {
                 if (!rq.isEmpty()) {
                     runningProcess = rq.dequeue();
@@ -44,6 +44,6 @@ public class SFSC {
             time++;
             System.out.println();
         }
-        System.out.println("SFSC END");
+        System.out.println("process.SFSC END");
     }
 }

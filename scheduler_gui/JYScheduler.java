@@ -3,7 +3,6 @@
 package scheduler_gui;
 
 import javax.swing.*;
-import javax.swing.border.EmptyBorder;
 import javax.swing.border.LineBorder;
 import java.awt.*;
 
@@ -14,30 +13,14 @@ public class JYScheduler extends JFrame{
         Container frame = getContentPane(); // frame 컨테이너 생성
         frame.setLayout(new BoxLayout(frame, BoxLayout.Y_AXIS)); // Boxlayout으로
 
-        // UIManager를 사용하여 Swing 컴포넌트의 기본 속성 변경
-        UIManager.put("Panel.background", Color.BLACK);
-        UIManager.put("Label.font", new Font("Fixed", Font.BOLD, 20));
-        UIManager.put("TableHeader.font", new Font("Fixed", Font.PLAIN, 15));
-        UIManager.put("Table.font", new Font("Fixed", Font.PLAIN, 15));
-        UIManager.put("Table.gridColor", Color.GREEN);
-        UIManager.put("Label.foreground", Color.GREEN);
-        UIManager.put("Button.background", Color.BLACK);
-        UIManager.put("Button.foreground", Color.GREEN);
-        UIManager.put("Button.font", new Font("Fixed", Font.PLAIN, 20));
-        UIManager.put("Table.foreground", Color.GREEN); // 글자색
-        UIManager.put("Table.background", Color.BLACK); // 배경색
-        UIManager.put("TableHeader.foreground", Color.GREEN); // 테이블 헤더 글자색
-        UIManager.put("TableHeader.background", Color.BLACK);
-        UIManager.put("ScrollPane.border", new LineBorder(Color.green)); // 스크롤영역 테두리
-        UIManager.put("ComboBox.background", Color.BLACK);
-        UIManager.put("ComboBox.foreground", Color.GREEN);
+        UIMaker();
 
         // 패널 생성 후 추가
         NameBar nameBar = new NameBar();
         InputPanel inputPanel = new InputPanel();
         OutputPanel outputPanel = new OutputPanel();
         GanttPanel ganttPanel = new GanttPanel();
-        ButtonsPanel buttonsPanel = new ButtonsPanel();
+        ButtonsPanel buttonsPanel = new ButtonsPanel(inputPanel);
         nameBar.setPreferredSize(new Dimension(500, 50));
         inputPanel.setPreferredSize(new Dimension(500, 200));
         outputPanel.setPreferredSize(new Dimension(500, 200));
@@ -55,7 +38,24 @@ public class JYScheduler extends JFrame{
         SwingUtilities.updateComponentTreeUI(frame);
         setVisible(true);
     }
-    public static void main(String[] args){
-        JYScheduler schedulerFrame = new JYScheduler();
+
+    void UIMaker(){
+        // UIManager를 사용하여 Swing 컴포넌트의 기본 속성 변경
+        UIManager.put("Panel.background", Color.BLACK);
+        UIManager.put("Label.font", new Font("Fixed", Font.BOLD, 20));
+        UIManager.put("TableHeader.font", new Font("Fixed", Font.PLAIN, 15));
+        UIManager.put("Table.font", new Font("Fixed", Font.PLAIN, 15));
+        UIManager.put("Table.gridColor", Color.GREEN);
+        UIManager.put("Label.foreground", Color.GREEN);
+        UIManager.put("Button.background", Color.BLACK);
+        UIManager.put("Button.foreground", Color.GREEN);
+        UIManager.put("Button.font", new Font("Fixed", Font.PLAIN, 20));
+        UIManager.put("Table.foreground", Color.GREEN); // 글자색
+        UIManager.put("Table.background", Color.BLACK); // 배경색
+        UIManager.put("TableHeader.foreground", Color.GREEN); // 테이블 헤더 글자색
+        UIManager.put("TableHeader.background", Color.BLACK);
+        UIManager.put("ScrollPane.border", new LineBorder(Color.green)); // 스크롤영역 테두리
+        UIManager.put("ComboBox.background", Color.BLACK);
+        UIManager.put("ComboBox.foreground", Color.GREEN);
     }
 }
