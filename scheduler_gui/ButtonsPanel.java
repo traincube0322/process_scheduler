@@ -10,10 +10,12 @@ import process.*;
 
 class ButtonsPanel extends JPanel {
     private InputPanel inputPanel;
+    private OutputPanel outputPanel;
     private ProcessPoll pp = new ProcessPoll();
-    private String[] comboIndex = {"정책 1", "정책 2", "정책 3"};
+    private String[] comboIndex = {"SFSC", "정책 2", "정책 3"};
 
-    public ButtonsPanel(InputPanel inputPanel) {
+    public ButtonsPanel(InputPanel inputPanel, OutputPanel outputPanel) {
+        this.outputPanel = outputPanel;
         this.inputPanel = inputPanel;
         setLayout(new FlowLayout());
 
@@ -30,6 +32,7 @@ class ButtonsPanel extends JPanel {
         policyBox.setPreferredSize(new Dimension(100, 40));
 
         openBtn.addActionListener(new SelectFile());
+        runBtn.addActionListener(new runFile());
         add(openBtn);
         add(runBtn);
         add(policyBox);
@@ -41,10 +44,16 @@ class ButtonsPanel extends JPanel {
 
             // 버튼 눌렀을 때 input패널창 변경
             inputPanel.reTable(pp);
+        }
+    }
+    class runFile implements ActionListener{
+        public void actionPerformed(ActionEvent e){
+            if(pp.isEmpty()) return;
 
+            // 버튼 눌렀을 때 output패널창 변경
+//            outputPanel.reTable(pp);
             SFSC sfsc = new SFSC(pp, new ReadyQueue());
             sfsc.run();
-
         }
     }
 }

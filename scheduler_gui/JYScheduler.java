@@ -20,7 +20,7 @@ public class JYScheduler extends JFrame{
         InputPanel inputPanel = new InputPanel();
         OutputPanel outputPanel = new OutputPanel();
         GanttPanel ganttPanel = new GanttPanel();
-        ButtonsPanel buttonsPanel = new ButtonsPanel(inputPanel);
+        ButtonsPanel buttonsPanel = new ButtonsPanel(inputPanel, outputPanel);
         nameBar.setPreferredSize(new Dimension(500, 50));
         inputPanel.setPreferredSize(new Dimension(500, 200));
         outputPanel.setPreferredSize(new Dimension(500, 200));
@@ -42,7 +42,6 @@ public class JYScheduler extends JFrame{
     void UIMaker(){
         // UIManager를 사용하여 Swing 컴포넌트의 기본 속성 변경
         UIManager.put("Panel.background", Color.BLACK);
-        UIManager.put("Label.font", new Font("Fixed", Font.BOLD, 20));
         UIManager.put("TableHeader.font", new Font("Fixed", Font.PLAIN, 15));
         UIManager.put("Table.font", new Font("Fixed", Font.PLAIN, 15));
         UIManager.put("Table.gridColor", Color.GREEN);
