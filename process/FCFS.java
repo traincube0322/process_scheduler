@@ -19,12 +19,11 @@ public class FCFS {
             while (!pp.isEmpty() && time == pp.peek().getArriveTime()) {
                 rq.enqueue(pp.poll());
             }
-            //pp.displayProcessPoll();
-            //rq.displayQueue();
             // running 프로세스가 있고, 프로세스가 시간을 다 썼다면?
             // runningProcess is null.
             if (runningProcess != null && runningProcess.getRemainTime() == 0) {
                 System.out.println("pid : " + runningProcess.getPid() + " end at " + time);
+                runningProcess.setTurnaroundTime(time);
                 runningProcess = null;
             }
             // 현재 실행중인 프로세스가 없다면?
@@ -33,10 +32,12 @@ public class FCFS {
                 if (!rq.isEmpty()) {
                     runningProcess = rq.dequeue();
                     System.out.println("pid : " + runningProcess.getPid() + " start at " + time);
+                    runningProcess.setResponseTime(time);
                 }
             }
             if (runningProcess != null)
                 runningProcess.cpuBurst();
+            rq.setWaiting();
             time++;
         }
         System.out.println("process FCFS END");

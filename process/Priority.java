@@ -22,6 +22,7 @@ public class Priority {
 
             if (runningProcess != null && runningProcess.getRemainTime() == 0) {
                 System.out.println("pid : " + runningProcess.getPid() + " end at " + time);
+                runningProcess.setTurnaroundTime(time);
                 runningProcess = null;
             }
 
@@ -29,10 +30,12 @@ public class Priority {
                 if (!ppq.isEmpty()) {
                     runningProcess = ppq.poll();
                     System.out.println("pid : " + runningProcess.getPid() + " start at " + time);
+                    runningProcess.setResponseTime(time);
                 }
             }
             if (runningProcess != null)
                 runningProcess.cpuBurst();
+            ppq.setWaiting();
             time++;
         }
         System.out.println("PRIORITY END");
