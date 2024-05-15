@@ -56,10 +56,10 @@ class ButtonsPanel extends JPanel {
             if(pp.isEmpty()) return;
             List<List<String>> output = new ArrayList<>();
 
-            FCFS fcfs = new FCFS(pp, new ReadyQueue());
+            FCFS fcfs = new FCFS(pp);
             Priority priority = new Priority(pp);
             SJF sjf = new SJF(pp);
-            Custom custom = new Custom(pp, new ReadyQueue());
+            Custom custom = new Custom(pp);
 
             // 현재 선택된 정책에 따라 다른 정책을 실행
             String selectedPolicy = (String) policyBox.getSelectedItem();
@@ -75,7 +75,7 @@ class ButtonsPanel extends JPanel {
                     break;
                 case "Custom":
                     custom.run();
-                    output = custom.getOutput();
+                    output = custom.getGanttOutput();
                     break;
                 default:
                     // 기본으로 FCFS 실행

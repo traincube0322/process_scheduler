@@ -13,6 +13,10 @@ public class ReadyQueue {
     public boolean isEmpty() { return Q.isEmpty(); }
     public int size() { return Q.size(); }
 
+    public void setWaiting() {
+        for (Process p : Q)
+            p.waiting();
+    }
     public void displayQueue ()
     {
         if (Q.isEmpty()) { System.out.println("Ready Queue Empty"); }
@@ -23,6 +27,5 @@ public class ReadyQueue {
             System.out.println();
         }
     }
-
 
 }

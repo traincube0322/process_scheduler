@@ -1,10 +1,13 @@
 package process;
 public class Process {
-    private int pid;
-    private int priority;
-    private int arriveTime;
-    private int burstTime;
+    private final int pid;
+    private final int priority;
+    private final int arriveTime;
+    private final int burstTime;
     private int remainTime;
+    private int turnaroundTime;
+    private int waitingTime;
+    private int responseTime;
 
     public Process(int pid, int priority, int arriveTime, int burstTime) {
         this.pid = pid;
@@ -12,6 +15,7 @@ public class Process {
         this.arriveTime = arriveTime;
         this.burstTime = burstTime;
         this.remainTime = burstTime;
+        this.waitingTime = 0;
     }
 
     public int getPid() { return pid; }
@@ -19,14 +23,22 @@ public class Process {
     public int getArriveTime() { return arriveTime; }
     public int getBurstTime() { return burstTime; }
     public int getRemainTime() { return remainTime; }
+    public int getTurnaroundTime() { return turnaroundTime; }
+    public int getWaitingTime() { return waitingTime; }
+    public int getResponseTime() { return responseTime; }
 
     public void cpuBurst() { remainTime--; }
+    public void waiting() { waitingTime++; }
+
+    public void setTurnaroundTime(int endTime) { turnaroundTime = endTime - arriveTime; }
+    public void setResponseTime(int startTime) { responseTime = startTime - arriveTime; }
 
     public int[] infoList() {
         int[] l = new int[4];
         l[0] = pid; l[1] = arriveTime; l[2] = burstTime; l[3] = priority;
         return l;
     }
+
     @Override
     public String toString() {
         return pid + ", " + priority + ", " + arriveTime + ", " + burstTime;
