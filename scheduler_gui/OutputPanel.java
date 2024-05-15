@@ -14,6 +14,8 @@ import java.util.List;
 class OutputPanel extends JPanel {
     String header[] = {"프로세스", "실행시간", "대기시간"};
     String contents[][] = {{"", "", ""},};
+
+    List<List<String>> newContents;
     JTable table;
     public OutputPanel() {
         setLayout(new BorderLayout());
@@ -36,28 +38,45 @@ class OutputPanel extends JPanel {
         add(scrollPane, BorderLayout.CENTER);
     }
 
-    void reTable(ProcessPoll pp){
-//        java.util.List<java.util.List<String>> newContents = new ArrayList<>();
+    void reTable(List<List<String>> output){
+        // 임의로 결과배열 만들기
+//        newContents = new ArrayList<>();
+//
 //        int pid[];
 //
+//        for(int i = 0; i<4; i++){
+//            newContents.add(new ArrayList<>());
+//            for(int j = 0; j<2; j++){
+//                newContents.get(i).add(Integer.toString(i+1));
+//            }
+//            newContents.get(i).add(Integer.toString(0));
+//        }
+        //
+        this.newContents = output;
+
+
 //        for (Process p : pp.getPq()){
 //            pid = p.infoList();
-//            java.util.List<String> newRow = new ArrayList<>();
+//            List<String> newRow = new ArrayList<>();
 //            for (int value : pid){
 //                newRow.add(Integer.toString(value));
 //            }
 //            newContents.add(newRow);
 //        }
-//
-//        // List<List<String>>을 Object[][]로 변환
-//        Object[][] tableData = new Object[newContents.size()][];
-//        for (int i = 0; i < newContents.size(); i++) {
-//            List<String> row = newContents.get(i);
-//            tableData[i] = row.toArray(new String[0]); // List<String>을 String[]로 변환하여 할당
-//        }
-//
-//        // DefaultTableModel 사용하여 테이블 데이터 변경
-//        DefaultTableModel model = new DefaultTableModel(tableData, header);
-//        table.setModel(model);
+
+        // List<List<String>>을 Object[][]로 변환
+        Object[][] tableData = new Object[newContents.size()][];
+        for (int i = 0; i < newContents.size(); i++) {
+            List<String> row = newContents.get(i);
+            tableData[i] = row.toArray(new String[0]); // List<String>을 String[]로 변환하여 할당
+        }
+
+        // DefaultTableModel 사용하여 테이블 데이터 변경
+        DefaultTableModel model = new DefaultTableModel(tableData, header);
+        table.setModel(model);
+    }
+
+    List<List<String>> getNewContents(){
+        return newContents;
     }
 }

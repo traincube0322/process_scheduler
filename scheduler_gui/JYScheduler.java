@@ -19,8 +19,8 @@ public class JYScheduler extends JFrame{
         NameBar nameBar = new NameBar();
         InputPanel inputPanel = new InputPanel();
         OutputPanel outputPanel = new OutputPanel();
-        GanttPanel ganttPanel = new GanttPanel();
-        ButtonsPanel buttonsPanel = new ButtonsPanel(inputPanel, outputPanel);
+        GanttPanel ganttPanel = new GanttPanel(outputPanel);
+        ButtonsPanel buttonsPanel = new ButtonsPanel(inputPanel, outputPanel, ganttPanel);
         nameBar.setPreferredSize(new Dimension(500, 50));
         inputPanel.setPreferredSize(new Dimension(500, 200));
         outputPanel.setPreferredSize(new Dimension(500, 200));
