@@ -5,7 +5,7 @@ import java.util.Queue;
 
 public class ReadyQueue {
 
-    Queue <Process> Q;
+    final private Queue <Process> Q;
 
     public ReadyQueue() { Q = new LinkedList<>(); }
     public void enqueue(Process p) { Q.offer(p); }

@@ -8,12 +8,13 @@ public class Custom {
     private int time;
     private final ProcessPoll pp;
     private final ProcessPriorityQueue ppq;
-    private List<List<String>> output = new ArrayList<>();
+    private final List<List<String>> output;
 
     public Custom(ProcessPoll pp) {
         time = 0;
         this.pp = pp;
         ppq = new ProcessPriorityQueue(new BurstTimeComparator());
+        output = new ArrayList<>();
     }
 
     public void run() {
@@ -64,6 +65,11 @@ public class Custom {
     }
 
     public List<List<String>> getGanttOutput(){ // 결과 배열 반환
+        if (this.output == null)
+        {
+            return null;
+        }
         return this.output;
     }
+
 }
