@@ -1,14 +1,20 @@
 package process;
+
+import java.util.ArrayList;
+import java.util.List;
+
 public class SJF {
 
     private int time;
     private final ProcessPoll pp;
     private final ProcessPriorityQueue ppq;
+    private final List<List<String>> output;
 
     public SJF(ProcessPoll pp) {
         time = 0;
         this.pp = pp;
         ppq = new ProcessPriorityQueue(new BurstTimeComparator());
+        output = new ArrayList<>();
     }
 
     public void run() {
@@ -23,6 +29,8 @@ public class SJF {
             if (runningProcess != null && runningProcess.getRemainTime() == 0) {
                 System.out.println("pid : " + runningProcess.getPid() + " end at " + time);
                 runningProcess.setTurnaroundTime(time);
+
+                output.add(runningProcess.output());
                 runningProcess = null;
             }
 

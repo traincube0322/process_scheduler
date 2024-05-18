@@ -64,12 +64,9 @@ public class Custom {
         System.out.println("SJF END");
     }
 
-    public List<List<String>> getGanttOutput(){ // 결과 배열 반환
-        if (this.output == null)
-        {
+    public List<List<String>> getGanttOutput() { // 결과 배열 반환
+        if (this.output.isEmpty())
             return null;
-        }
         return this.output;
     }
-
 }

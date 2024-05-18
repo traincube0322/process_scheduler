@@ -1,4 +1,8 @@
 package process;
+
+import java.sql.Array;
+import java.util.ArrayList;
+
 public class Process {
     private final int pid;
     private final int priority;
@@ -37,6 +41,15 @@ public class Process {
         int[] l = new int[4];
         l[0] = pid; l[1] = arriveTime; l[2] = burstTime; l[3] = priority;
         return l;
+    }
+
+    public ArrayList<String> output() {
+        ArrayList<String> tmp = new ArrayList<>();
+        tmp.add(Integer.toString(this.pid));
+        tmp.add(Integer.toString(this.turnaroundTime));
+        tmp.add(Integer.toString(this.responseTime));
+        tmp.add(Integer.toString(this.waitingTime));
+        return tmp;
     }
 
     @Override
