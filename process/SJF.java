@@ -17,14 +17,18 @@ public class SJF {
         output = new ArrayList<>();
     }
 
+    void intoReadyQueue() {
+        while (!pp.isEmpty() && time == pp.peek().getArriveTime()) {
+            ppq.add(pp.poll());
+        }
+    }
+
     public void run() {
         Process runningProcess = null;
 
         while (runningProcess != null || !pp.isEmpty() || !ppq.isEmpty()) {
 
-            while (!pp.isEmpty() && time == pp.peek().getArriveTime()) {
-                ppq.add(pp.poll());
-            }
+            intoReadyQueue();
 
             if (runningProcess != null && runningProcess.getRemainTime() == 0) {
                 System.out.println("pid : " + runningProcess.getPid() + " end at " + time);

@@ -12,7 +12,7 @@ public class SRTF {
     }
 
     public void run() {
-        System.out.println("아직 안만듦 메롱 ㅋ");
+
     }
 
 }
