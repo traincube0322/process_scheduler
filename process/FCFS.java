@@ -9,6 +9,7 @@ public class FCFS {
     private final ReadyQueue rq;
     private final List<List<String>> gantt;
     private final List<List<String>> output;
+    private Process runningProcess;
 
     public FCFS(ProcessPoll pp) {
         time = 0;
@@ -16,6 +17,7 @@ public class FCFS {
         rq = new ReadyQueue();
         gantt = new ArrayList<>();
         output = new ArrayList<>();
+        runningProcess = null;
     }
 
     void intoReadyQueue() {
@@ -26,7 +28,6 @@ public class FCFS {
 
     public void run() {
         ArrayList<String> tmp = null;
-        Process runningProcess = null;
         while (runningProcess != null || !pp.isEmpty() || !rq.isEmpty()) {
 
             intoReadyQueue();
@@ -35,8 +36,9 @@ public class FCFS {
                 if (runningProcess.getRemainTime() == 0) {
                     runningProcess.setTurnaroundTime(time);
                     output.add(runningProcess.output());
+                    assert tmp != null;
                     int startTime = Integer.parseInt(tmp.getLast());
-                    tmp.removeLast();
+                    tmp.remove(1);
                     tmp.add(String.valueOf(time - startTime));
                     tmp.add(String.valueOf(time));
                     gantt.add(tmp);
