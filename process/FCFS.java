@@ -27,6 +27,7 @@ public class FCFS {
 
     public void run() {
         Process runningProcess = null;
+        int startTime=0;
         // 프로세스 풀에 없고, READY QUEUE가 비고, RUNNING PROCESS가 없다면 종료
         while (runningProcess != null || (!pp.isEmpty() || !rq.isEmpty())) {
 
@@ -37,6 +38,10 @@ public class FCFS {
 
             if (runningProcess != null && runningProcess.getRemainTime() == 0) {
                 System.out.println("pid : " + runningProcess.getPid() + " end at " + time);
+
+                gantt.get(gantt.size()-1).add((Integer.toString(time-startTime)));
+                startTime = time;
+
                 runningProcess.setTurnaroundTime(time);
                 output.add(runningProcess.output());
                 runningProcess = null;
@@ -47,6 +52,11 @@ public class FCFS {
                 if (!rq.isEmpty()) {
                     runningProcess = rq.dequeue();
                     System.out.println("pid : " + runningProcess.getPid() + " start at " + time);
+                    gantt.add(new ArrayList<>());
+                    gantt.get(gantt.size()-1).add(Integer.toString(runningProcess.getPid())); // pid넣기
+                    gantt.get(gantt.size()-1).add(Integer.toString(time));
+                    startTime = time;
+
                     runningProcess.setResponseTime(time);
                 }
             }
@@ -64,7 +74,9 @@ public class FCFS {
         return this.output;
     }
 
-//    public List<List<String>> getGantt() {
-//
-//    }
+    public List<List<String>> getGantt() {
+        if (this.gantt.isEmpty())
+            return null;
+        return this.gantt;
+    }
 }

@@ -2,6 +2,7 @@ package scheduler_gui;
 
 import javax.swing.*;
 import java.awt.*;
+import java.util.ArrayList;
 import java.util.List;
 
 class GanttPanel extends JPanel {
@@ -12,30 +13,28 @@ class GanttPanel extends JPanel {
     private int rectHeight = 50;
     private final int D = 1; //간트차트 그리기위한 배율 상수
     private int totalWidth; // 화면 전체 너비
-    int totalTime = 5877;
-    double averageWaitingTime = 4485;
-    List<List<String>> outputArray;
-    public GanttPanel(OutputPanel outputPanel) {
-        this.outputPanel = outputPanel;
+    List<List<String>> ganttArray;
+    int totalTime = 0;
+    double averageWaitingTime = 0;
+    JLabel totalInfo;
+    public GanttPanel() {
 //        setLayout(new FlowLayout(FlowLayout.LEFT));
-        JLabel total = new JLabel("전체 실행시간: "+totalTime+"       평균 대기시간: "+averageWaitingTime);
-//        JLabel average = new JLabel();
+        totalInfo = new JLabel("전체 실행시간: "+"       평균 대기시간: ");
 
-        add(total);
-//        add(average);
+
+        add(totalInfo);
     }
 
-    public void paintChart(){
-        outputArray = outputPanel.getNewContents();
-        System.out.println("간트차트");
+    public void paintChart(List<List<String>> ganttArray){
+        this.ganttArray = ganttArray;
 
         calculateTotalWidth(); // 화면 전체 너비 계산
         repaint();
     }
     private void calculateTotalWidth() {
-        if (outputArray != null) {
+        if (ganttArray != null) {
             totalWidth = 0;
-            for (List<String> process : outputArray) {
+            for (List<String> process : ganttArray) {
                 int processTime = Integer.parseInt(process.get(1)); // 프로세스 실행 시간
                 totalWidth += processTime * D; // 사각형 너비 누적
             }
@@ -46,23 +45,27 @@ class GanttPanel extends JPanel {
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);
         int panelWidth = getWidth(); // 패널의 가로 너비 가져오기
-        int totalProcessTime = 0;
         int currentTime = 0;
+        int totalProcessTime = 0;
+        if(ganttArray!=null){
+            currentTime = Integer.parseInt(ganttArray.get(0).get(1));
+        }
+
         // 각 프로세스에 대한 사각형 그리기
         int currentX = x;
 
-        if (outputArray != null && outputArray.size() > 0) {
+        if (ganttArray != null && ganttArray.size() > 0) {
 
 
             // 전체 프로세스 실행 시간 계산
-            for (List<String> process : outputArray) {
-                int processTime = Integer.parseInt(process.get(1)); // 프로세스 실행 시간
+            for (List<String> process : ganttArray) {
+                int processTime = Integer.parseInt(process.get(2)); // 프로세스 실행 시간
                 totalProcessTime += processTime;
             }
 
 
-            for (List<String> process : outputArray) {
-                int processTime = Integer.parseInt(process.get(1)); // 프로세스 실행 시간
+            for (List<String> process : ganttArray) {
+                int processTime = Integer.parseInt(process.get(2)); // 프로세스 실행 시간
                 String processName = process.get(0); // 프로세스 이름
 
                 // 각 프로세스를 사각형으로 그립니다.
@@ -81,7 +84,7 @@ class GanttPanel extends JPanel {
                 int textY = y + (rectHeight - textHeight) / 2 + metrics.getAscent(); // 텍스트의 y 좌표 계산
                 g.drawString(processName, textX, textY); // 프로세스 이름 출력
 
-                g.drawString(Integer.toString(currentTime), currentX, y+rectHeight+10); // 시간 출력
+                g.drawString(Integer.toString(currentTime), currentX, y+rectHeight+15); // 시간 출력
 
                 currentX += rectWidth; // 다음 사각형의 x 좌표 조정
                 currentTime += processTime;
@@ -89,6 +92,18 @@ class GanttPanel extends JPanel {
             }
         }
 
-        g.drawString(Integer.toString(currentTime), currentX-20, y+rectHeight+15);
+        g.drawString(Integer.toString(currentTime), currentX-15, y+rectHeight+15);
+        totalTime = totalProcessTime;
+        totalInfo.setText("전체 실행시간: "+totalTime+"       평균 대기시간: "+averageWaitingTime);
+    }
+
+    public void setAverageWaitingTime(List<List<String>> output) {
+        double n = output.size();
+        double sum = 0;
+        for(List<String> p : output){
+            sum += Double.parseDouble(p.get(2));
+        }
+
+        averageWaitingTime = sum/n;
     }
 }

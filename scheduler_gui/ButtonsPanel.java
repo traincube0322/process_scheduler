@@ -1,5 +1,7 @@
 package scheduler_gui;
 
+import process.*;
+
 import javax.swing.*;
 import javax.swing.border.LineBorder;
 import java.awt.*;
@@ -7,8 +9,6 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.util.List;
-
-import process.*;
 
 class ButtonsPanel extends JPanel {
     private InputPanel inputPanel;
@@ -55,6 +55,7 @@ class ButtonsPanel extends JPanel {
         public void actionPerformed(ActionEvent e){
             if(pp.isEmpty()) return;
             List<List<String>> output = new ArrayList<>();
+            List<List<String>> gantt = new ArrayList<>();
 
             FCFS fcfs = new FCFS(pp);
             Priority priority = new Priority(pp);
@@ -66,6 +67,8 @@ class ButtonsPanel extends JPanel {
             switch (selectedPolicy) {
                 case "FCFS":
                     fcfs.run();
+                    output = fcfs.getOutput();
+                    gantt = fcfs.getGantt();
                     break;
                 case "Priority":
                     priority.run();
@@ -83,7 +86,8 @@ class ButtonsPanel extends JPanel {
                     break;
             }
             outputPanel.reTable(output);
-            ganttPanel.paintChart();
+            ganttPanel.paintChart(gantt);
+            ganttPanel.setAverageWaitingTime(output);
         }
     }
 }

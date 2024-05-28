@@ -12,8 +12,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 class OutputPanel extends JPanel {
-    String header[] = {"프로세스", "실행시간", "대기시간"};
-    String contents[][] = {{"", "", ""},};
+    String header[] = {"PID", "TurnaroundTime", "ResponseTime", "WaitingTime"};
+    String contents[][] = {{"", "", "", ""},};
 
     List<List<String>> newContents;
     JTable table;
@@ -39,30 +39,7 @@ class OutputPanel extends JPanel {
     }
 
     void reTable(List<List<String>> output){
-        // 임의로 결과배열 만들기
-//        newContents = new ArrayList<>();
-//
-//        int pid[];
-//
-//        for(int i = 0; i<4; i++){
-//            newContents.add(new ArrayList<>());
-//            for(int j = 0; j<2; j++){
-//                newContents.get(i).add(Integer.toString(i+1));
-//            }
-//            newContents.get(i).add(Integer.toString(0));
-//        }
-        //
         this.newContents = output;
-
-
-//        for (Process p : pp.getPq()){
-//            pid = p.infoList();
-//            List<String> newRow = new ArrayList<>();
-//            for (int value : pid){
-//                newRow.add(Integer.toString(value));
-//            }
-//            newContents.add(newRow);
-//        }
 
         // List<List<String>>을 Object[][]로 변환
         Object[][] tableData = new Object[newContents.size()][];
