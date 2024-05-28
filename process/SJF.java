@@ -7,49 +7,64 @@ public class SJF {
 
     private int time;
     private final ProcessPoll pp;
-    private final ProcessPriorityQueue ppq;
+    private final ProcessPriorityQueue pq;
     private final List<List<String>> output;
+    private final List<List<String>> gantt;
 
     public SJF(ProcessPoll pp) {
         time = 0;
         this.pp = pp;
-        ppq = new ProcessPriorityQueue(new BurstTimeComparator());
+        pq = new ProcessPriorityQueue(new BurstTimeComparator());
         output = new ArrayList<>();
+        gantt = new ArrayList<>();
     }
 
     void intoReadyQueue() {
         while (!pp.isEmpty() && time == pp.peek().getArriveTime()) {
-            ppq.add(pp.poll());
+            pq.add(pp.poll());
         }
     }
 
     public void run() {
+        ArrayList<String> tmp = null;
         Process runningProcess = null;
 
-        while (runningProcess != null || !pp.isEmpty() || !ppq.isEmpty()) {
+        while (runningProcess != null || !pp.isEmpty() || !pq.isEmpty()) {
 
             intoReadyQueue();
 
-            if (runningProcess != null && runningProcess.getRemainTime() == 0) {
-                System.out.println("pid : " + runningProcess.getPid() + " end at " + time);
-                runningProcess.setTurnaroundTime(time);
-
-                output.add(runningProcess.output());
-                runningProcess = null;
+            if (runningProcess != null) {
+                if (runningProcess.getRemainTime() == 0) {
+                    runningProcess.setTurnaroundTime(time);
+                    output.add(runningProcess.output());
+                    int startTime = Integer.parseInt(tmp.getLast());
+                    tmp.removeLast();
+                    tmp.add(String.valueOf(time - startTime));
+                    gantt.add(tmp);
+                    runningProcess = null;
+                }
+                else
+                    runningProcess.cpuBurst();
             }
-
-            if (runningProcess == null) {
-                if (!ppq.isEmpty()) {
-                    runningProcess = ppq.poll();
-                    System.out.println("pid : " + runningProcess.getPid() + " start at " + time);
+            else {
+                if (!pq.isEmpty()) {
+                    runningProcess = pq.poll();
+                    tmp = new ArrayList<>();
+                    tmp.add(String.valueOf(runningProcess.getPid()));
+                    tmp.add(String.valueOf(time));
                     runningProcess.setResponseTime(time);
                 }
             }
-            if (runningProcess != null)
-                runningProcess.cpuBurst();
-            ppq.setWaiting();
+            pq.setWaiting();
             time++;
         }
-        System.out.println("SJF END");
+    }
+
+    public List<List<String>> getOutput() {
+        return this.output;
+    }
+
+    public List<List<String>> getGantt() {
+        return this.gantt;
     }
 }
