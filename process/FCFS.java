@@ -2,7 +2,6 @@ package process;
 
 import java.util.ArrayList;
 import java.util.List;
-
 public class FCFS {
 
     private int time;
