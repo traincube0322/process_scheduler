@@ -36,7 +36,9 @@ public class FCFS {
                 if (runningProcess.getRemainTime() == 0) {
                     runningProcess.setTurnaroundTime(time);
                     output.add(runningProcess.output());
-                    tmp.add(2, String.valueOf(time));
+                    int startTime = Integer.parseInt(tmp.getLast());
+                    tmp.removeLast();
+                    tmp.add(String.valueOf(time - startTime));
                     gantt.add(tmp);
                     runningProcess = null;
                 }
@@ -47,8 +49,8 @@ public class FCFS {
                 if (!rq.isEmpty()) {
                     runningProcess = rq.dequeue();
                     tmp = new ArrayList<>();
-                    tmp.add(0, String.valueOf(runningProcess.getPid()));
-                    tmp.add(1, String.valueOf(time));
+                    tmp.add(String.valueOf(runningProcess.getPid()));
+                    tmp.add(String.valueOf(time));
                     runningProcess.setResponseTime(time);
                 }
             }
