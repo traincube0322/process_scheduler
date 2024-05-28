@@ -36,16 +36,20 @@ public class FCFS {
                 if (runningProcess.getRemainTime() == 0) {
                     runningProcess.setTurnaroundTime(time);
                     output.add(runningProcess.output());
+<<<<<<< HEAD
                     int startTime = Integer.parseInt(tmp.getLast());
                     tmp.removeLast();
                     tmp.add(String.valueOf(time - startTime));
+=======
+                    tmp.add(String.valueOf(time));
+>>>>>>> 5999b13
                     gantt.add(tmp);
                     runningProcess = null;
                 }
                 else
                     runningProcess.cpuBurst();
             }
-            else {
+            if (runningProcess == null)
                 if (!rq.isEmpty()) {
                     runningProcess = rq.dequeue();
                     tmp = new ArrayList<>();
