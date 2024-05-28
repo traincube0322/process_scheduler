@@ -20,63 +20,49 @@ public class FCFS {
     }
 
     void intoReadyQueue() {
-        while (!pp.isEmpty() && time == pp.peek().getArriveTime()) {
+        while (!pp.isEmpty() && time >= pp.peek().getArriveTime()) {
             rq.enqueue(pp.poll());
         }
     }
 
     public void run() {
+        ArrayList<String> tmp = null;
         Process runningProcess = null;
-        int startTime=0;
-        // 프로세스 풀에 없고, READY QUEUE가 비고, RUNNING PROCESS가 없다면 종료
-        while (runningProcess != null || (!pp.isEmpty() || !rq.isEmpty())) {
+        while (runningProcess != null || !pp.isEmpty() || !rq.isEmpty()) {
 
             intoReadyQueue();
 
-            // running 프로세스가 있고, 프로세스가 시간을 다 썼다면?
-            // runningProcess is null.
-
-            if (runningProcess != null && runningProcess.getRemainTime() == 0) {
-                System.out.println("pid : " + runningProcess.getPid() + " end at " + time);
-
-                gantt.get(gantt.size()-1).add((Integer.toString(time-startTime)));
-                startTime = time;
-
-                runningProcess.setTurnaroundTime(time);
-                output.add(runningProcess.output());
-                runningProcess = null;
+            if (runningProcess != null) {
+                if (runningProcess.getRemainTime() == 0) {
+                    runningProcess.setTurnaroundTime(time);
+                    output.add(runningProcess.output());
+                    tmp.add(2, String.valueOf(time));
+                    gantt.add(tmp);
+                    System.out.println(tmp);
+                    runningProcess = null;
+                }
+                else
+                    runningProcess.cpuBurst();
             }
-            // 현재 실행중인 프로세스가 없다면?
-            // RQ 에서 프로세스 하나를 뽑아서 CPU Burst 시킴. : Running process.Process
-            if (runningProcess == null) {
+            else {
                 if (!rq.isEmpty()) {
                     runningProcess = rq.dequeue();
-                    System.out.println("pid : " + runningProcess.getPid() + " start at " + time);
-                    gantt.add(new ArrayList<>());
-                    gantt.get(gantt.size()-1).add(Integer.toString(runningProcess.getPid())); // pid넣기
-                    gantt.get(gantt.size()-1).add(Integer.toString(time));
-                    startTime = time;
-
+                    tmp = new ArrayList<>();
+                    tmp.add(0, String.valueOf(runningProcess.getPid()));
+                    tmp.add(1, String.valueOf(time));
                     runningProcess.setResponseTime(time);
                 }
             }
-            if (runningProcess != null)
-                runningProcess.cpuBurst();
             rq.setWaiting();
             time++;
         }
-        System.out.println("process FCFS END");
     }
 
     public List<List<String>> getOutput() {
-        if (this.output.isEmpty())
-            return null;
         return this.output;
     }
 
     public List<List<String>> getGantt() {
-        if (this.gantt.isEmpty())
-            return null;
         return this.gantt;
     }
 }

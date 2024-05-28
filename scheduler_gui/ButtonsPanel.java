@@ -58,7 +58,6 @@ class ButtonsPanel extends JPanel {
             List<List<String>> gantt = new ArrayList<>();
 
             FCFS fcfs = new FCFS(pp);
-            Priority priority = new Priority(pp);
             SJF sjf = new SJF(pp);
             Custom custom = new Custom(pp);
 
@@ -69,9 +68,6 @@ class ButtonsPanel extends JPanel {
                     fcfs.run();
                     output = fcfs.getOutput();
                     gantt = fcfs.getGantt();
-                    break;
-                case "Priority":
-                    priority.run();
                     break;
                 case "SJF":
                     sjf.run();
