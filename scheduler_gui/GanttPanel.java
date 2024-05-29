@@ -35,10 +35,12 @@ class GanttPanel extends JPanel {
         if (ganttArray != null) {
             totalWidth = 0;
             for (List<String> process : ganttArray) {
-                int processTime = Integer.parseInt(process.get(2)); // 프로세스 실행 시간
+                int processTime = Integer.parseInt(process.get(2)) - Integer.parseInt(process.get(1)) -1; // 프로세스 실행 시간
                 totalWidth += processTime * D; // 사각형 너비 누적
             }
         }
+        System.out.println(ganttArray);
+        System.out.println("총 넓이"+totalWidth);
     }
 
     @Override
@@ -59,13 +61,13 @@ class GanttPanel extends JPanel {
 
             // 전체 프로세스 실행 시간 계산
             for (List<String> process : ganttArray) {
-                int processTime = Integer.parseInt(process.get(2)); // 프로세스 실행 시간
+                int processTime = Integer.parseInt(process.get(2)) - Integer.parseInt(process.get(1)) -1; // 프로세스 실행 시간
                 totalProcessTime += processTime;
             }
 
 
             for (List<String> process : ganttArray) {
-                int processTime = Integer.parseInt(process.get(2)); // 프로세스 실행 시간
+                int processTime = Integer.parseInt(process.get(2)) - Integer.parseInt(process.get(1)) -1; // 프로세스 실행 시간
                 String processName = process.get(0); // 프로세스 이름
 
                 // 각 프로세스를 사각형으로 그립니다.

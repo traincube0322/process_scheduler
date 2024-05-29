@@ -37,8 +37,8 @@ public class SJF {
                 if (runningProcess.getRemainTime() == 0) {
                     runningProcess.setTurnaroundTime(time);
                     output.add(runningProcess.output());
-                    int startTime = Integer.parseInt(tmp.getLast());
-                    tmp.removeLast();
+                    int startTime = Integer.parseInt(tmp.get(1));
+                    tmp.remove(1);
                     tmp.add(String.valueOf(time - startTime));
                     gantt.add(tmp);
                     runningProcess = null;
