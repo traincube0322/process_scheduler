@@ -3,25 +3,16 @@ package process;
 import java.util.ArrayList;
 import java.util.List;
 
-public class SRTF {
+public class SRTF extends Scheduler {
 
-    private int time;
-    private final ProcessPoll pp;
     private final ProcessPriorityQueue pq;
-    private final List<List<String>> output;
-    private final List<List<String>> gantt;
-    private Process runningProcess;
 
     public SRTF(ProcessPoll pp) {
-        time = 0;
-        this.pp = pp;
+        super(pp);
         pq = new ProcessPriorityQueue(new RemainTimeComparator());
-        output = new ArrayList<>();
-        gantt = new ArrayList<>();
-        runningProcess = null;
     }
 
-    void intoReadyQueue() {
+    protected void intoReadyQueue() {
         while (!pp.isEmpty() && time == pp.peek().getArriveTime()) {
             pq.add(pp.poll());
         }
@@ -34,16 +25,13 @@ public class SRTF {
             intoReadyQueue();
 
             if (runningProcess != null) {
-                // 더 짧은 remainTime이 있을 경우 교체
                 if (!pq.isEmpty() && runningProcess.getRemainTime() > pq.peek().getRemainTime()) {
                     int startTime = Integer.parseInt(tmp.get(1));
                     tmp.add(String.valueOf(time - startTime));
                     gantt.add(tmp);
-                    System.out.println("time : " + time + " tmp : " + tmp);
                     pq.add(runningProcess);
                     runningProcess = null;
                 }
-                // Process 종료
                 else if (runningProcess.getRemainTime() == 0) {
                     runningProcess.setTurnaroundTime(time);
                     output.add(runningProcess.output());
@@ -67,13 +55,5 @@ public class SRTF {
             pq.setWaiting();
             time++;
         }
-        System.out.println("SRTF END");
-    }
-    public List<List<String>> getOutput() {
-        return this.output;
-    }
-
-    public List<List<String>> getGantt() {
-        return this.gantt;
     }
 }

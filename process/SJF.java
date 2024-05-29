@@ -3,26 +3,17 @@ package process;
 import java.util.ArrayList;
 import java.util.List;
 
-public class SJF {
+public class SJF extends Scheduler{
 
-    private int time;
-    private final ProcessPoll pp;
     private final ProcessPriorityQueue pq;
-    private final List<List<String>> output;
-    private final List<List<String>> gantt;
-    private Process runningProcess;
-
 
     public SJF(ProcessPoll pp) {
-        time = 0;
-        this.pp = pp;
+        super(pp);
         pq = new ProcessPriorityQueue(new BurstTimeComparator());
-        output = new ArrayList<>();
-        gantt = new ArrayList<>();
-        runningProcess = null;
     }
 
-    void intoReadyQueue() {
+    @Override
+    protected void intoReadyQueue() {
         while (!pp.isEmpty() && time == pp.peek().getArriveTime()) {
             pq.add(pp.poll());
         }
@@ -63,11 +54,4 @@ public class SJF {
         }
     }
 
-    public List<List<String>> getOutput() {
-        return this.output;
-    }
-
-    public List<List<String>> getGantt() {
-        return this.gantt;
-    }
 }
