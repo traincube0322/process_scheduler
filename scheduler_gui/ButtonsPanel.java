@@ -15,7 +15,7 @@ class ButtonsPanel extends JPanel {
     private OutputPanel outputPanel;
     private GanttPanel ganttPanel;
     private ProcessPoll pp = new ProcessPoll();
-    private String[] comboIndex = {"FCFS", "SJF", "SRTF", "Custom"};
+    private String[] comboIndex = {"FCFS", "SJF", "SRTF", "RR", "Custom"};
     JComboBox<String> policyBox;
 
     public ButtonsPanel(InputPanel inputPanel, OutputPanel outputPanel, GanttPanel ganttPanel) {
@@ -60,6 +60,7 @@ class ButtonsPanel extends JPanel {
             FCFS fcfs = new FCFS(pp);
             SJF sjf = new SJF(pp);
             SRTF srtf = new SRTF(pp);
+            RoundRobin rr = new RoundRobin(pp, 4);
             Custom custom = new Custom(pp);
 
             // 현재 선택된 정책에 따라 다른 정책을 실행
@@ -79,6 +80,11 @@ class ButtonsPanel extends JPanel {
                     srtf.run();
                     output = srtf.getOutput();
                     gantt = srtf.getGantt();
+                    break;
+                case "RR" :
+                    rr.run();
+                    output = rr.getOutput();
+                    gantt = rr.getGantt();
                     break;
                 case "Custom":
                     custom.run();
