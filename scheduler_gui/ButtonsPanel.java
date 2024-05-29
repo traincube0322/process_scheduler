@@ -17,6 +17,11 @@ class ButtonsPanel extends JPanel {
     private ProcessPoll pp = new ProcessPoll();
     private String[] comboIndex = {"FCFS", "Priority", "SJF", "Custom"};
     JComboBox<String> policyBox;
+    // Create a SpinnerModel with initial value 1, min 1, max Integer.MAX_VALUE, step 1
+    SpinnerModel model = new SpinnerNumberModel(1, 1, Integer.MAX_VALUE, 1);
+
+    // Create a JSpinner with the model
+    JSpinner timesliceBox;
 
     public ButtonsPanel(InputPanel inputPanel, OutputPanel outputPanel, GanttPanel ganttPanel) {
         this.outputPanel = outputPanel;
@@ -27,6 +32,8 @@ class ButtonsPanel extends JPanel {
         JButton openBtn = new JButton("file open");
         JButton runBtn = new JButton("run");
         policyBox = new JComboBox<>();
+        JLabel tsbLabel = new JLabel("TimeSlice : ");
+        timesliceBox = new JSpinner(model);
         for (String s : comboIndex) policyBox.addItem(s);
 
         openBtn.setBorder(new LineBorder(Color.green));
@@ -41,6 +48,8 @@ class ButtonsPanel extends JPanel {
         add(openBtn);
         add(runBtn);
         add(policyBox);
+        add(tsbLabel);
+        add(timesliceBox);
     }
 
     class SelectFile implements ActionListener{
@@ -71,6 +80,8 @@ class ButtonsPanel extends JPanel {
                     break;
                 case "SJF":
                     sjf.run();
+                    output = sjf.getOutput();
+                    gantt = sjf.getGantt();
                     break;
                 case "Custom":
                     custom.run();

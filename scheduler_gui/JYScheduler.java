@@ -56,5 +56,12 @@ public class JYScheduler extends JFrame{
         UIManager.put("ScrollPane.border", new LineBorder(Color.green)); // 스크롤영역 테두리
         UIManager.put("ComboBox.background", Color.BLACK);
         UIManager.put("ComboBox.foreground", Color.GREEN);
+        UIManager.put("Spinner.background", Color.BLACK);
+        UIManager.put("Spinner.foreground", Color.GREEN);
+        UIManager.put("Spinner.border", BorderFactory.createLineBorder(Color.GREEN));
+        UIManager.put("Spinner.arrowButtonBackground", Color.BLACK);
+        UIManager.put("Spinner.arrowButtonForeground", Color.GREEN);
+        UIManager.put("FormattedTextField.background", Color.BLACK);
+        UIManager.put("FormattedTextField.foreground", Color.GREEN);
     }
 }
