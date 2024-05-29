@@ -53,7 +53,7 @@ public class Process {
 
     @Override
     public String toString() {
-        return pid + ", " + priority + ", " + arriveTime + ", " + burstTime;
+        return "PID : " + pid;
     }
 }
 

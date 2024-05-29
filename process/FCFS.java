@@ -22,16 +22,9 @@ public class FCFS extends Scheduler {
         while (runningProcess != null || !pp.isEmpty() || !rq.isEmpty()) {
             intoReadyQueue();
 
-            if (runningProcess != null) {
-                if (runningProcess.getRemainTime() == 0) {
-                    runningProcess.setTurnaroundTime(time);
-                    output.add(runningProcess.output());
-                    int startTime = Integer.parseInt(tmp.get(1));
-                    tmp.add(String.valueOf(time - startTime));
-                    gantt.add(tmp);
-                    runningProcess = null;
-                }
-            }
+            if (runningProcess != null && runningProcess.getRemainTime() == 0)
+                    processEnd();
+
             if (runningProcess == null) {
                 if (!rq.isEmpty()) {
                     runningProcess = rq.dequeue();

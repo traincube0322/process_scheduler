@@ -26,17 +26,9 @@ public class SJF extends Scheduler{
 
             intoReadyQueue();
 
-            if (runningProcess != null) {
-                //System.out.println("Running Process is not null");
-                if (runningProcess.getRemainTime() == 0) {
-                    runningProcess.setTurnaroundTime(time);
-                    output.add(runningProcess.output());
-                    int startTime = Integer.parseInt(tmp.get(1));
-                    tmp.add(String.valueOf(time - startTime));
-                    gantt.add(tmp);
-                    runningProcess = null;
-                }
-            }
+            if (runningProcess != null && runningProcess.getRemainTime() == 0)
+                    processEnd();
+
             if (runningProcess == null) {
                 //System.out.println("Running Process is null");
                 if (!pq.isEmpty()) {

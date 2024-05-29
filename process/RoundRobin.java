@@ -5,6 +5,7 @@ import java.util.ArrayList;
 public class RoundRobin extends Scheduler {
 
     private final int quantum;
+    private int tmpTime;
     private final ReadyQueue rq;
     public RoundRobin(ProcessPoll pp, int quantum) {
         super(pp);
@@ -20,32 +21,29 @@ public class RoundRobin extends Scheduler {
     }
 
     public void run() {
-        int tmpTime = 0;
-        ArrayList<String> tmp = null;
+        tmpTime = 0;
         while (runningProcess != null || !pp.isEmpty() || !rq.isEmpty()) {
+
             intoReadyQueue();
 
             if (runningProcess != null) {
                 if (runningProcess.getRemainTime() == 0) {
-                    runningProcess.setTurnaroundTime(time);
-                    output.add(runningProcess.output());
-                    int startTime = Integer.parseInt(tmp.get(1));
-                    tmp.add(String.valueOf(time - startTime));
-                    gantt.add(tmp);
-                    runningProcess = null;
+                    processEnd();
                     tmpTime = 0;
                     continue;
                 }
-                if (!rq.isEmpty() && tmpTime == quantum) {
-                    int startTime = Integer.parseInt(tmp.get(1));
-                    tmp.add(String.valueOf(time - startTime));
-                    gantt.add(tmp);
-                    System.out.println("time : " + time + " tmpTime : " + tmpTime + " tmp : " + tmp);
-                    rq.enqueue(runningProcess);
-                    runningProcess = null;
+                if (tmpTime == quantum) {
+                    if (!rq.isEmpty()) {
+                        int startTime = Integer.parseInt(tmp.get(1));
+                        tmp.add(String.valueOf(time - startTime));
+                        gantt.add(tmp);
+                        rq.enqueue(runningProcess);
+                        runningProcess = null;
+                    }
                     tmpTime = 0;
                 }
             }
+
             if (runningProcess == null) {
                 if (!rq.isEmpty()) {
                     runningProcess = rq.dequeue();
@@ -55,6 +53,7 @@ public class RoundRobin extends Scheduler {
                     runningProcess.setResponseTime(time);
                 }
             }
+
             if (runningProcess != null) {
                 runningProcess.cpuBurst();
                 tmpTime++;

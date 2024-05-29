@@ -33,14 +33,10 @@ public class SRTF extends Scheduler {
                     runningProcess = null;
                 }
                 else if (runningProcess.getRemainTime() == 0) {
-                    runningProcess.setTurnaroundTime(time);
-                    output.add(runningProcess.output());
-                    int startTime = Integer.parseInt(tmp.get(1));
-                    tmp.add(String.valueOf(time - startTime));
-                    gantt.add(tmp);
-                    runningProcess = null;
+                   processEnd();
                 }
             }
+
             if (runningProcess == null) {
                 if (!pq.isEmpty()) {
                     runningProcess = pq.poll();
@@ -50,6 +46,7 @@ public class SRTF extends Scheduler {
                     runningProcess.setResponseTime(time);
                 }
             }
+
             if (runningProcess != null)
                 runningProcess.cpuBurst();
             pq.setWaiting();
