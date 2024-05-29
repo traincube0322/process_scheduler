@@ -14,7 +14,6 @@ public class Main {
 //        ProcessPoll pp = new ProcessPoll();
 //        pp.add(new Process(1, 1, 1, 1));
 //        pp.add(new Process(2, 2, 2, 2));
-//        pp.add(new Process(3, 3, 3, 3));
 //        pp.add(new Process(4, 4, 4, 4));
 //
 //        FCFS fcfs = new FCFS(pp);

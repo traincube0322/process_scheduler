@@ -1,18 +1,59 @@
 package process;
 
-public class SRTF {
-    private int time;
-    private final ProcessPoll pp;
-    private final ProcessPriorityQueue ppq;
+import java.util.ArrayList;
+import java.util.List;
+
+public class SRTF extends Scheduler {
+
+    private final ProcessPriorityQueue pq;
 
     public SRTF(ProcessPoll pp) {
-        time = 0;
-        this.pp = pp;
-        ppq = new ProcessPriorityQueue(new RemainTimeComparator());
+        super(pp);
+        pq = new ProcessPriorityQueue(new RemainTimeComparator());
     }
 
+    protected void intoReadyQueue() {
+        while (!pp.isEmpty() && time == pp.peek().getArriveTime()) {
+            pq.add(pp.poll());
+        }
+    }
     public void run() {
+        ArrayList<String> tmp = null;
 
+        while (runningProcess != null || !pp.isEmpty() || !pq.isEmpty()) {
+
+            intoReadyQueue();
+
+            if (runningProcess != null) {
+                if (!pq.isEmpty() && runningProcess.getRemainTime() > pq.peek().getRemainTime()) {
+                    int startTime = Integer.parseInt(tmp.get(1));
+                    tmp.add(String.valueOf(time - startTime));
+                    gantt.add(tmp);
+                    pq.add(runningProcess);
+                    runningProcess = null;
+                }
+                else if (runningProcess.getRemainTime() == 0) {
+                    runningProcess.setTurnaroundTime(time);
+                    output.add(runningProcess.output());
+                    int startTime = Integer.parseInt(tmp.get(1));
+                    tmp.add(String.valueOf(time - startTime));
+                    gantt.add(tmp);
+                    runningProcess = null;
+                }
+            }
+            if (runningProcess == null) {
+                if (!pq.isEmpty()) {
+                    runningProcess = pq.poll();
+                    tmp = new ArrayList<>();
+                    tmp.add(String.valueOf(runningProcess.getPid()));
+                    tmp.add(String.valueOf(time));
+                    runningProcess.setResponseTime(time);
+                }
+            }
+            if (runningProcess != null)
+                runningProcess.cpuBurst();
+            pq.setWaiting();
+            time++;
+        }
     }
-
 }

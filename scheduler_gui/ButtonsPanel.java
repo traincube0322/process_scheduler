@@ -15,7 +15,7 @@ class ButtonsPanel extends JPanel {
     private OutputPanel outputPanel;
     private GanttPanel ganttPanel;
     private ProcessPoll pp = new ProcessPoll();
-    private String[] comboIndex = {"FCFS", "Priority", "SJF", "Custom"};
+    private String[] comboIndex = {"FCFS", "SJF", "SRTF", "RR", "Custom"};
     JComboBox<String> policyBox;
     // Create a SpinnerModel with initial value 1, min 1, max Integer.MAX_VALUE, step 1
     SpinnerModel model = new SpinnerNumberModel(1, 1, Integer.MAX_VALUE, 1);
@@ -34,6 +34,7 @@ class ButtonsPanel extends JPanel {
         policyBox = new JComboBox<>();
         JLabel tsbLabel = new JLabel("TimeSlice : ");
         timesliceBox = new JSpinner(model);
+        timesliceBox.setPreferredSize(new Dimension(60, timesliceBox.getPreferredSize().height));
         for (String s : comboIndex) policyBox.addItem(s);
 
         openBtn.setBorder(new LineBorder(Color.green));
@@ -66,8 +67,13 @@ class ButtonsPanel extends JPanel {
             List<List<String>> output = new ArrayList<>();
             List<List<String>> gantt = new ArrayList<>();
 
+            // 타임슬라이스 값 얻어오기
+            int timeslice = (Integer) timesliceBox.getValue();
+            
             FCFS fcfs = new FCFS(pp);
             SJF sjf = new SJF(pp);
+            SRTF srtf = new SRTF(pp);
+            RoundRobin rr = new RoundRobin(pp, timeslice);
             Custom custom = new Custom(pp);
 
             // 현재 선택된 정책에 따라 다른 정책을 실행
@@ -82,6 +88,16 @@ class ButtonsPanel extends JPanel {
                     sjf.run();
                     output = sjf.getOutput();
                     gantt = sjf.getGantt();
+                    break;
+                case "SRTF" :
+                    srtf.run();
+                    output = srtf.getOutput();
+                    gantt = srtf.getGantt();
+                    break;
+                case "RR" :
+                    rr.run();
+                    output = rr.getOutput();
+                    gantt = rr.getGantt();
                     break;
                 case "Custom":
                     custom.run();

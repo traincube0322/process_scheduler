@@ -1,16 +1,18 @@
 package process;
 
 import java.util.ArrayList;
-import java.util.List;
-public class FCFS extends Scheduler {
 
+public class RoundRobin extends Scheduler {
+
+    private final int quantum;
     private final ReadyQueue rq;
-
-    public FCFS(ProcessPoll pp) {
+    public RoundRobin(ProcessPoll pp, int quantum) {
         super(pp);
+        this.quantum = quantum;
         rq = new ReadyQueue();
     }
 
+    @Override
     protected void intoReadyQueue() {
         while (!pp.isEmpty() && time >= pp.peek().getArriveTime()) {
             rq.enqueue(pp.poll());
@@ -18,6 +20,7 @@ public class FCFS extends Scheduler {
     }
 
     public void run() {
+        int tmpTime = 0;
         ArrayList<String> tmp = null;
         while (runningProcess != null || !pp.isEmpty() || !rq.isEmpty()) {
             intoReadyQueue();
@@ -30,6 +33,17 @@ public class FCFS extends Scheduler {
                     tmp.add(String.valueOf(time - startTime));
                     gantt.add(tmp);
                     runningProcess = null;
+                    tmpTime = 0;
+                    continue;
+                }
+                if (!rq.isEmpty() && tmpTime == quantum) {
+                    int startTime = Integer.parseInt(tmp.get(1));
+                    tmp.add(String.valueOf(time - startTime));
+                    gantt.add(tmp);
+                    System.out.println("time : " + time + " tmpTime : " + tmpTime + " tmp : " + tmp);
+                    rq.enqueue(runningProcess);
+                    runningProcess = null;
+                    tmpTime = 0;
                 }
             }
             if (runningProcess == null) {
@@ -41,11 +55,12 @@ public class FCFS extends Scheduler {
                     runningProcess.setResponseTime(time);
                 }
             }
-            if (runningProcess != null)
+            if (runningProcess != null) {
                 runningProcess.cpuBurst();
+                tmpTime++;
+            }
             rq.setWaiting();
             time++;
         }
-
     }
 }

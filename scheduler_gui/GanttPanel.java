@@ -100,7 +100,7 @@ class GanttPanel extends JPanel {
         double n = output.size();
         double sum = 0;
         for(List<String> p : output){
-            sum += Double.parseDouble(p.get(2));
+            sum += Double.parseDouble(p.get(3));
         }
 
         averageWaitingTime = sum/n;
