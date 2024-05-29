@@ -43,7 +43,6 @@ public class SJF {
                     int startTime = Integer.parseInt(tmp.get(1));
                     tmp.add(String.valueOf(time - startTime));
                     gantt.add(tmp);
-                    //System.out.println(tmp);
                     runningProcess = null;
                 }
             }

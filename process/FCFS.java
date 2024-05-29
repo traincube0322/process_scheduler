@@ -45,7 +45,6 @@ public class FCFS {
                 }
             }
             if (runningProcess == null) {
-                //System.out.println("Running Process is null");
                 if (!rq.isEmpty()) {
                     runningProcess = rq.dequeue();
                     tmp = new ArrayList<>();
