@@ -28,26 +28,24 @@ public class FCFS {
 
     public void run() {
         ArrayList<String> tmp = null;
+        System.out.println("FCFS Start!");
         while (runningProcess != null || !pp.isEmpty() || !rq.isEmpty()) {
-
             intoReadyQueue();
 
             if (runningProcess != null) {
+                //System.out.println("Running Process is not null");
                 if (runningProcess.getRemainTime() == 0) {
                     runningProcess.setTurnaroundTime(time);
                     output.add(runningProcess.output());
-                    assert tmp != null;
-                    int startTime = Integer.parseInt(tmp.getLast());
-                    tmp.remove(1);
+                    int startTime = Integer.parseInt(tmp.get(1));
                     tmp.add(String.valueOf(time - startTime));
-                    tmp.add(String.valueOf(time));
                     gantt.add(tmp);
-                    System.out.println(tmp);
+                    //System.out.println(tmp);
                     runningProcess = null;
-                } else
-                    runningProcess.cpuBurst();
+                }
             }
-            if (runningProcess == null)
+            if (runningProcess == null) {
+                //System.out.println("Running Process is null");
                 if (!rq.isEmpty()) {
                     runningProcess = rq.dequeue();
                     tmp = new ArrayList<>();
@@ -55,9 +53,13 @@ public class FCFS {
                     tmp.add(String.valueOf(time));
                     runningProcess.setResponseTime(time);
                 }
+            }
+            if (runningProcess != null)
+                runningProcess.cpuBurst();
+            rq.setWaiting();
+            time++;
         }
-        rq.setWaiting();
-        time++;
+
     }
 
 

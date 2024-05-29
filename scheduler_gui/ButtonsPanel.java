@@ -71,6 +71,8 @@ class ButtonsPanel extends JPanel {
                     break;
                 case "SJF":
                     sjf.run();
+                    output = sjf.getOutput();
+                    gantt = sjf.getGantt();
                     break;
                 case "Custom":
                     custom.run();
