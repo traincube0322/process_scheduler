@@ -1,7 +1,5 @@
 package process;
 
-import java.util.ArrayList;
-
 public class RoundRobin extends Scheduler {
 
     private final int quantum;
@@ -25,27 +23,22 @@ public class RoundRobin extends Scheduler {
     public void run() {
         tmpTime = 0;
         while (runningProcess != null || !pp.isEmpty() || !rq.isEmpty()) {
-
             intoReadyQueue();
-
             if (runningProcess != null) {
                 if (runningProcess.getRemainTime() == 0) {
                     processEnd();
                     tmpTime = 0;
-                    continue;
                 }
-                if (tmpTime == quantum) {
+                else if (tmpTime == quantum) {
                     if (!rq.isEmpty())
                         changeProcess();
-
                     tmpTime = 0;
                 }
             }
-
             if (runningProcess == null)
                 pickProcess();
-
             timeElapse();
+
         }
     }
 }

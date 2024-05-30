@@ -1,7 +1,5 @@
 package process;
 
-import java.util.ArrayList;
-
 public class SJF extends Scheduler{
     public SJF(ProcessPoll pp) {
         super(pp);
@@ -10,16 +8,11 @@ public class SJF extends Scheduler{
 
     public void run() {
         while (runningProcess != null || !pp.isEmpty() || !rq.isEmpty()) {
-
             intoReadyQueue();
-
             if (runningProcess != null && runningProcess.getRemainTime() == 0)
                 processEnd();
-
             pickProcess();
-
             timeElapse();
         }
     }
-
 }

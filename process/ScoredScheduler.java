@@ -17,21 +17,15 @@ public class ScoredScheduler extends Scheduler{
 
     public void run() {
         while (runningProcess != null | !pp.isEmpty() | !rq.isEmpty()) {
-
             intoReadyQueue();
-
             if (runningProcess != null) {
                 if (runningProcess.getRemainTime() == 0)
                     processEnd();
-
                 else if (!rq.isEmpty() && runningProcess.getScore() < rq.peek().getScore())
                     changeProcess();
             }
-
             pickProcess();
-
             timeElapse();
         }
     }
-
 }

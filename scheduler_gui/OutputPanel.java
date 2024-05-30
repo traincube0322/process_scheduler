@@ -1,14 +1,10 @@
 package scheduler_gui;
 
-import process.Process;
-import process.ProcessPoll;
-
 import javax.swing.*;
 import javax.swing.border.LineBorder;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
 import java.awt.*;
-import java.util.ArrayList;
 import java.util.List;
 
 class OutputPanel extends JPanel {

@@ -10,7 +10,6 @@ import javax.swing.table.DefaultTableModel;
 import java.awt.*;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.PriorityQueue;
 
 class InputPanel extends JPanel {
     private String[] header = {"프로세스", "도착시간", "실행시간", "우선순위"};

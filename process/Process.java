@@ -23,13 +23,9 @@ public class Process {
     }
 
     public int getPid() { return pid; }
-    public int getPriority() { return priority; }
     public int getArriveTime() { return arriveTime; }
     public int getBurstTime() { return burstTime; }
     public int getRemainTime() { return remainTime; }
-    public int getTurnaroundTime() { return turnaroundTime; }
-    public int getWaitingTime() { return waitingTime; }
-    public int getResponseTime() { return responseTime; }
     public int getScore() { return score; }
 
     public void cpuBurst() { remainTime--; }
@@ -52,13 +48,6 @@ public class Process {
         tmp.add(Integer.toString(this.responseTime));
         tmp.add(Integer.toString(this.waitingTime));
         return tmp;
-    }
-
-
-
-    @Override
-    public String toString() {
-        return "PID : " + pid;
     }
 }
 
