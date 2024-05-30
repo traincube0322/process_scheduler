@@ -74,7 +74,7 @@ class ButtonsPanel extends JPanel {
             SJF sjf = new SJF(pp);
             SRTF srtf = new SRTF(pp);
             RoundRobin rr = new RoundRobin(pp, timeslice);
-            ScoredScheduler ss = new ScoredScheduler(pp);
+            ScoredScheduler ss = new ScoredScheduler(pp, timeslice);
 
             // 현재 선택된 정책에 따라 다른 정책을 실행
             String selectedPolicy = (String) policyBox.getSelectedItem();

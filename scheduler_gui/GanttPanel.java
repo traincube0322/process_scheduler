@@ -87,7 +87,7 @@ class GanttPanel extends JPanel {
 
                 currentX += rectWidth; // 다음 사각형의 x 좌표 조정
                 currentTime += processTime;
-                System.out.println("생성!");
+                //System.out.println("생성!");
             }
         }
 

@@ -21,12 +21,12 @@ class RemainTimeComparator implements Comparator<Process> {
 
 class ScoreComparator implements Comparator<Process> {
     @Override
-    public int compare(Process p1, Process p2) { return Integer.compare(p1.getScore(), p2.getScore()); }
+    public int compare(Process p1, Process p2) { return Integer.compare(p2.getScore(), p1.getScore()); }
 }
 
 public class ReadyQueue {
 
-    final private Queue <Process> RQ;
+    private Queue <Process> RQ;
 
     public ReadyQueue() { RQ = new LinkedList<>(); }
     public ReadyQueue(BurstTimeComparator bc) { RQ = new PriorityQueue<>(new BurstTimeComparator()); }
@@ -45,7 +45,13 @@ public class ReadyQueue {
     }
 
     public void reScore() {
-        for (Process p : RQ)
-            p.reScore();
+        Queue<Process> RQ = new PriorityQueue<>(new ScoreComparator());
+        while (!this.RQ.isEmpty()) {
+            Process tmp = this.RQ.poll();
+            tmp.reScore();
+            RQ.offer(tmp);
+        }
+        this.RQ = RQ;
     }
+
 }

@@ -35,8 +35,7 @@ public class RoundRobin extends Scheduler {
                     tmpTime = 0;
                 }
             }
-            if (runningProcess == null)
-                pickProcess();
+            pickProcess();
             timeElapse();
 
         }
