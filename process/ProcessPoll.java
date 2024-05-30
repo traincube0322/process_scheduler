@@ -25,11 +25,4 @@ public class ProcessPoll {
     public PriorityQueue<Process> getPq(){
         return pq;
     }
-
-    public void displayProcessPoll() {
-        System.out.println("process.Process Poll");
-        for (Process p : pq)
-            System.out.println(p);
-        System.out.println();
-    }
 }

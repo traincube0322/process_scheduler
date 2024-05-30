@@ -11,7 +11,7 @@ public class Process {
     private int turnaroundTime;
     private int waitingTime;
     private int responseTime;
-
+    private int score;
     public Process(int pid, int priority, int arriveTime, int burstTime) {
         this.pid = pid;
         this.priority = priority;
@@ -19,6 +19,7 @@ public class Process {
         this.burstTime = burstTime;
         this.remainTime = burstTime;
         this.waitingTime = 0;
+        this.score = priority;
     }
 
     public int getPid() { return pid; }
@@ -29,9 +30,11 @@ public class Process {
     public int getTurnaroundTime() { return turnaroundTime; }
     public int getWaitingTime() { return waitingTime; }
     public int getResponseTime() { return responseTime; }
+    public int getScore() { return score; }
 
     public void cpuBurst() { remainTime--; }
     public void waiting() { waitingTime++; }
+    public void reScore() { score = priority + waitingTime; }
 
     public void setTurnaroundTime(int endTime) { turnaroundTime = endTime - arriveTime; }
     public void setResponseTime(int startTime) { responseTime = startTime - arriveTime; }
@@ -50,6 +53,8 @@ public class Process {
         tmp.add(Integer.toString(this.waitingTime));
         return tmp;
     }
+
+
 
     @Override
     public String toString() {
