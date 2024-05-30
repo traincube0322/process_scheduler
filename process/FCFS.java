@@ -18,7 +18,6 @@ public class FCFS extends Scheduler {
     }
 
     public void run() {
-        ArrayList<String> tmp = null;
         while (runningProcess != null || !pp.isEmpty() || !rq.isEmpty()) {
             intoReadyQueue();
 

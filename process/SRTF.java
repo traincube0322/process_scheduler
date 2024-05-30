@@ -18,8 +18,6 @@ public class SRTF extends Scheduler {
         }
     }
     public void run() {
-        ArrayList<String> tmp = null;
-
         while (runningProcess != null || !pp.isEmpty() || !pq.isEmpty()) {
 
             intoReadyQueue();

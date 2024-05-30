@@ -20,8 +20,6 @@ public class SJF extends Scheduler{
     }
 
     public void run() {
-        ArrayList<String> tmp = null;
-
         while (runningProcess != null || !pp.isEmpty() || !pq.isEmpty()) {
 
             intoReadyQueue();
@@ -30,7 +28,6 @@ public class SJF extends Scheduler{
                     processEnd();
 
             if (runningProcess == null) {
-                //System.out.println("Running Process is null");
                 if (!pq.isEmpty()) {
                     runningProcess = pq.poll();
                     tmp = new ArrayList<>();
