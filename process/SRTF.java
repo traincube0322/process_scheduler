@@ -12,8 +12,11 @@ public class SRTF extends Scheduler {
             if (runningProcess != null) {
                 if (runningProcess.getRemainTime() == 0)
                     processEnd();
-                else if (!rq.isEmpty() && runningProcess.getRemainTime() > rq.peek().getRemainTime())
-                    changeProcess();
+                else if (!rq.isEmpty()) {
+                    rq.heapify();
+                    if (runningProcess.getRemainTime() > rq.peek().getRemainTime())
+                        changeProcess();
+                }
             }
             pickProcess();
             timeElapse();

@@ -44,6 +44,15 @@ public class ReadyQueue {
             p.waiting();
     }
 
+    public void heapify() {
+        Queue<Process> RQ = new PriorityQueue<>(new RemainTimeComparator());
+        while (!this.RQ.isEmpty()) {
+            Process tmp = this.RQ.poll();
+            RQ.offer(tmp);
+        }
+        this.RQ = RQ;
+    }
+
     public void reScore() {
         Queue<Process> RQ = new PriorityQueue<>(new ScoreComparator());
         while (!this.RQ.isEmpty()) {

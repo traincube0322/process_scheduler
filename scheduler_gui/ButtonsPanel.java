@@ -15,7 +15,7 @@ class ButtonsPanel extends JPanel {
     private OutputPanel outputPanel;
     private GanttPanel ganttPanel;
     private ProcessPoll pp = new ProcessPoll();
-    private String[] comboIndex = {"FCFS", "SJF", "SRTF", "RR", "SS"};
+    private String[] comboIndex = {"FCFS", "SJF", "SRTF", "RR", "PSRR"};
     JComboBox<String> policyBox;
     // Create a SpinnerModel with initial value 1, min 1, max Integer.MAX_VALUE, step 1
     SpinnerModel model = new SpinnerNumberModel(1, 1, Integer.MAX_VALUE, 1);
@@ -74,7 +74,7 @@ class ButtonsPanel extends JPanel {
             SJF sjf = new SJF(pp);
             SRTF srtf = new SRTF(pp);
             RoundRobin rr = new RoundRobin(pp, timeslice);
-            ScoredScheduler ss = new ScoredScheduler(pp, timeslice);
+            PriorityScoredRR psrr = new PriorityScoredRR(pp, timeslice);
 
             // 현재 선택된 정책에 따라 다른 정책을 실행
             String selectedPolicy = (String) policyBox.getSelectedItem();
@@ -99,10 +99,10 @@ class ButtonsPanel extends JPanel {
                     output = rr.getOutput();
                     gantt = rr.getGantt();
                     break;
-                case "SS" :
-                    ss.run();
-                    output = ss.getOutput();
-                    gantt = ss.getGantt();
+                case "PSRR" :
+                    psrr.run();
+                    output = psrr.getOutput();
+                    gantt = psrr.getGantt();
                     break;
                 default:
                     // 기본으로 FCFS 실행

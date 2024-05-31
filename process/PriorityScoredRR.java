@@ -1,10 +1,10 @@
 package process;
 
-public class ScoredScheduler extends Scheduler{
+public class PriorityScoredRR extends Scheduler{
     private final int quantum;
     private int tmpTime;
 
-    public ScoredScheduler(ProcessPoll pp, int quantum) {
+    public PriorityScoredRR(ProcessPoll pp, int quantum) {
         super(pp);
         this.quantum = quantum;
         rq = new ReadyQueue(new ScoreComparator());

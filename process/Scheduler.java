@@ -36,6 +36,14 @@ public abstract class Scheduler {
         runningProcess = null;
     }
 
+    protected void changeProcess() {
+        int startTime = Integer.parseInt(tmp.get(1));
+        tmp.add(String.valueOf(time - startTime));
+        gantt.add(tmp);
+        rq.offer(runningProcess);
+        runningProcess = null;
+    }
+
     protected void pickProcess() {
         if (runningProcess == null && !rq.isEmpty()) {
             runningProcess = rq.poll();
@@ -44,14 +52,6 @@ public abstract class Scheduler {
             tmp.add(String.valueOf(time));
             runningProcess.setResponseTime(time);
         }
-    }
-
-    protected void changeProcess() {
-        int startTime = Integer.parseInt(tmp.get(1));
-        tmp.add(String.valueOf(time - startTime));
-        gantt.add(tmp);
-        rq.offer(runningProcess);
-        runningProcess = null;
     }
 
     protected void timeElapse() {
